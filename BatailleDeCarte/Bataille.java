@@ -38,40 +38,51 @@ public class Bataille {
         while (partieEnCours) {
 
             // A mettre en commentaire pour laisser la partie se jouer toute seule
-            //scan.nextLine();
+            // scan.nextLine();
 
             Carte c1 = j1.tireUneCarte();
             Carte c2 = j2.tireUneCarte();
 
             System.out.println("J1 joue " + c1.nomCarte() + " | " + "J2 joue " + c2.nomCarte());
 
-            if (c1.gagne(c2)) {
+            if (c1.getValeur() == c2.getValeur()) {
 
-                System.out.println("J1 gagne la manche");
+                System.out.println("Egalité");
 
-                j1.ajouterUneCarte(c1); // Recupere sa carte et celle de son adversaire
-                j1.ajouterUneCarte(c2);
-                j1.incrementeScore();
+                // Chacun recupere sa carte
+                j1.ajouterUneCarte(c1);
+                j2.ajouterUneCarte(c2);
 
             } else {
+                
+                if (c1.gagne(c2)) {
 
-                System.out.println("J2 gagne la manche");
+                    System.out.println("J1 gagne la manche");
 
-                j2.ajouterUneCarte(c1); // Recupere sa carte et celle de son adversaire
-                j2.ajouterUneCarte(c2);
-                j2.incrementeScore();
+                    j1.ajouterUneCarte(c1); // Recupere sa carte et celle de son adversaire
+                    j1.ajouterUneCarte(c2);
+                    j1.incrementeScore();
 
-            }
+                } else {
 
-            // Affiche les scores
-            System.out.println("Score : ");
-            System.out.println("J1 " + j1.getScore() + " --- " + j2.getScore() + " J2");
+                    System.out.println("J2 gagne la manche");
 
-            System.out.println("\n...\n");
+                    j2.ajouterUneCarte(c1); // Recupere sa carte et celle de son adversaire
+                    j2.ajouterUneCarte(c2);
+                    j2.incrementeScore();
 
-            // Si l'un des joueurs n'a plus de carte on arrete la partie
-            if (j1.getNbCartes() == 0 || j2.getNbCartes() == 0) {
-                partieEnCours = false;
+                }
+
+                // Affiche les scores
+                System.out.println("Score : ");
+                System.out.println("J1 " + j1.getScore() + " --- " + j2.getScore() + " J2");
+
+                System.out.println("\n...\n");
+
+                // Si l'un des joueurs n'a plus de carte on arrete la partie
+                if (j1.getNbCartes() == 0 || j2.getNbCartes() == 0) {
+                    partieEnCours = false;
+                }
             }
 
         }
