@@ -35,6 +35,7 @@ public class Bataille {
 
         /* Boucle de jeu */
         System.out.println("Appuyez sur entrer pour faire jouer les 2 joueurs ...");
+        scan.nextLine();
 
         while (partieEnCours) {
 
@@ -44,7 +45,7 @@ public class Bataille {
             Carte c1 = j1.tireUneCarte();
             Carte c2 = j2.tireUneCarte();
 
-            System.out.println("J1 joue " + c1.nomCarte() + " | " + "J2 joue " + c2.nomCarte());
+            System.out.println("J1 joue " + c1.nomCarte() + " de " + c1.getCouleur() + " | " + "J2 joue " + c2.nomCarte() + " de " + c2.getCouleur());
 
             // En cas d'egalite on tire un deuxieme carte a mettre en jeu
             if (c1.getValeur() == c2.getValeur()) {
@@ -56,34 +57,24 @@ public class Bataille {
 
                 System.out.println("Manche égalité");
 
-            } else if(c1.gagne(c2)) { // Si joueur 1 gagne
+            } else {
 
-                System.out.println("J1 gagne la manche");
-
-                j1.ajouterUneCarte(c1); // Recupere sa carte et celle de son adversaire
-                j1.ajouterUneCarte(c2);
-
-                if (egalite.size() != 0) { // Recupere les carte dans la fosse egalite sil y en a
-                    egalite.forEach((carte) -> j1.ajouterUneCarte(carte));
-                }
-
-                j1.incrementeScore();
-
-
-            } else { // Sinon joueur 2 gagne
-
-                System.out.println("J2 gagne la manche");
-
-                j2.ajouterUneCarte(c1); // Recupere sa carte et celle de son adversaire
-                j2.ajouterUneCarte(c2);
+                Joueur gagnant = (c1.gagne(c2)) ? j1 : j2;
+                gagnant.ajouterUneCarte(c1); // Recupere sa carte et celle de son adversaire
+                gagnant.ajouterUneCarte(c2);
 
                 if (egalite.size() != 0) { // Recupere les carte dans la fosse egalite sil y en a
-                    egalite.forEach((carte) -> j1.ajouterUneCarte(carte));
+                    for (int i = 0; i < egalite.size(); i++) {
+                        gagnant.ajouterUneCarte(egalite.remove(i));
+                    }
                 }
 
-                j2.incrementeScore();
+                gagnant.incrementeScore();
 
             }
+
+            System.out.println("NB CARTES J1 = " + j1.getNbCartes());
+            System.out.println("NB CARTES J2 = " + j2.getNbCartes());
 
             // Affiche les scores
             System.out.println("Score : ");

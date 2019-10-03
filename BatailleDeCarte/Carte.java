@@ -31,8 +31,8 @@ public class Carte {
     /**
      * @return the couleur
      */
-    public int getCouleur() {
-        return couleur;
+    public String getCouleur() {
+        return couleurs[this.couleur];
     }
 
     /**
