@@ -15,15 +15,14 @@ public class Joueur {
         this.cartes = new ArrayList<Carte>();
     }
 
-    /* Renvoie une carte aléatoire de son paquet */
+    // Tire la premiere carte du paquet
     public Carte tireUneCarte() {
         // Verif si non vide
         if (cartes.size() == 0) {
             return null;
         } else {
-            return cartes.remove(new Random().nextInt(cartes.size()));
+            return cartes.remove(0);
         }
-
     }
 
     /* Ajoute une carte au paquet du joueur */

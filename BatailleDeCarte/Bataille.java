@@ -11,6 +11,7 @@ public class Bataille {
         Boolean partieEnCours = true;
 
         ArrayList<Carte> paquet = new ArrayList<Carte>();
+        ArrayList<Carte> egalite = new ArrayList<Carte>();
 
         Joueur j1 = new Joueur();
         Joueur j2 = new Joueur();
@@ -45,46 +46,55 @@ public class Bataille {
 
             System.out.println("J1 joue " + c1.nomCarte() + " | " + "J2 joue " + c2.nomCarte());
 
+            // En cas d'egalite on tire un deuxieme carte a mettre en jeu
             if (c1.getValeur() == c2.getValeur()) {
 
-                System.out.println("Egalité");
+                egalite.add(c1);
+                egalite.add(c2);
+                egalite.add(j1.tireUneCarte());
+                egalite.add(j2.tireUneCarte());
 
-                // Chacun recupere sa carte
-                j1.ajouterUneCarte(c1);
+                System.out.println("Manche égalité");
+
+            } else if(c1.gagne(c2)) { // Si joueur 1 gagne
+
+                System.out.println("J1 gagne la manche");
+
+                j1.ajouterUneCarte(c1); // Recupere sa carte et celle de son adversaire
+                j1.ajouterUneCarte(c2);
+
+                if (egalite.size() != 0) { // Recupere les carte dans la fosse egalite sil y en a
+                    egalite.forEach((carte) -> j1.ajouterUneCarte(carte));
+                }
+
+                j1.incrementeScore();
+
+
+            } else { // Sinon joueur 2 gagne
+
+                System.out.println("J2 gagne la manche");
+
+                j2.ajouterUneCarte(c1); // Recupere sa carte et celle de son adversaire
                 j2.ajouterUneCarte(c2);
 
-            } else {
-                
-                if (c1.gagne(c2)) {
-
-                    System.out.println("J1 gagne la manche");
-
-                    j1.ajouterUneCarte(c1); // Recupere sa carte et celle de son adversaire
-                    j1.ajouterUneCarte(c2);
-                    j1.incrementeScore();
-
-                } else {
-
-                    System.out.println("J2 gagne la manche");
-
-                    j2.ajouterUneCarte(c1); // Recupere sa carte et celle de son adversaire
-                    j2.ajouterUneCarte(c2);
-                    j2.incrementeScore();
-
+                if (egalite.size() != 0) { // Recupere les carte dans la fosse egalite sil y en a
+                    egalite.forEach((carte) -> j1.ajouterUneCarte(carte));
                 }
 
-                // Affiche les scores
-                System.out.println("Score : ");
-                System.out.println("J1 " + j1.getScore() + " --- " + j2.getScore() + " J2");
+                j2.incrementeScore();
 
-                System.out.println("\n...\n");
-
-                // Si l'un des joueurs n'a plus de carte on arrete la partie
-                if (j1.getNbCartes() == 0 || j2.getNbCartes() == 0) {
-                    partieEnCours = false;
-                }
             }
 
+            // Affiche les scores
+            System.out.println("Score : ");
+            System.out.println("J1 " + j1.getScore() + " --- " + j2.getScore() + " J2");
+
+            System.out.println("\n...\n");
+
+            // Si l'un des joueurs n'a plus de carte on arrete la partie
+            if (j1.getNbCartes() == 0 || j2.getNbCartes() == 0) {
+                partieEnCours = false;
+            }
         }
 
         // Affiche score final et gagnant
@@ -93,8 +103,10 @@ public class Bataille {
 
         if (j1.getScore() > j2.getScore()) {
             System.out.println("Le joueur 1 gagne");
-        } else {
+        } else if (j2.getScore() > j1.getScore()) {
             System.out.println("Le joueur 2 gagne");
+        } else {
+            System.out.println("Egalité");
         }
 
         System.out.println("C'était vraiment pas ouf ce jeu");
