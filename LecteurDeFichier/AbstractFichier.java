@@ -9,19 +9,15 @@ public abstract class AbstractFichier implements LecteurFichier {
     public AbstractFichier() {
     }
 
+    public abstract void lisFichier(File f);
+
     @Override
-    public void creerFichier() {
-        FileInputStream in = null;
-        File f = new File("xanadu.txt");
-        try {
-            in = new FileInputStream(f); // ouverture du fichier // Throws: FileNotFoundException : => try/catch
-            // OPERATIONS DE LECTURE
-        } finally {
-            if (in != null) {
-            }
+    public void listeFichiers(File f) {
+        String[] liste;
+
+        liste = f.list();
+        for (String fichier : liste) {
+            System.out.println(fichier);
         }
     }
-
-    public abstract void test();
-
 }

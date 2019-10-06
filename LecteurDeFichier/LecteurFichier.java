@@ -5,17 +5,12 @@ import java.io.File;
  */
 public interface LecteurFichier {
 
-    /* Affiche le nom du fichier */
-    void afficheNomFichier();
+    // Affiche le contenu du fichier
+    void lisFichier(File file);
 
-    boolean existe(File f);
-
-    boolean estUnRepertoire(File f);
-
-    void editerFichier(File f);
-
-    void afficherFichier(File f);
-
-    void creerFichier();
+    // Liste les fichiers 
+    void listeFichiers(File f);
     
+    // Supprime le fichier
+    // boolean supprimerFichier(File f);
 }
