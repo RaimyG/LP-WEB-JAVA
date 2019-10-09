@@ -14,7 +14,7 @@ public class Start {
 
         Fichiertxt file = new Fichiertxt();
 
-        System.out.println("Les commandes disponibles sont : ls; cat <fichier>; reverse <fichier>");
+        System.out.println("Les commandes disponibles sont : ls; cat <fichier>; reverse <fichier>; diff <fichier1> <fichier2>; exit");
 
         while (true) {
             String user = sc.nextLine();
@@ -31,7 +31,7 @@ public class Start {
                     File f = new File(cmd[1]);
                     file.lisFichierEnvers(f);
                 } else {
-                    System.out.println("Usage: car <fichier>");
+                    System.out.println("Usage: reverse <fichier>");
                 }
                 break;
 
@@ -40,7 +40,17 @@ public class Start {
                     File f2 = new File(cmd[1]);
                     file.lisFichier(f2);
                 } else {
-                    System.out.println("Usage: car <fichier>");
+                    System.out.println("Usage: cat <fichier>");
+                }
+                break;
+
+            case "diff": // Affiche le contenu du fichier
+                if (cmd.length == 3) {
+                    File f3 = new File(cmd[1]);
+                    File f4 = new File(cmd[2]);
+                    file.diff(f3,f4);
+                } else {
+                    System.out.println("Usage: diff <fichier1> <fichier2>");
                 }
                 break;
 
