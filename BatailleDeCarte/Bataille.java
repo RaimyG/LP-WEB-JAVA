@@ -26,7 +26,7 @@ public class Bataille {
         /* Melange et distribution des cartes */
         Collections.shuffle(paquet);
         for (int index = 0; index < paquet.size(); index++) {
-            if (index < 26) {
+            if (index < paquet.size()/2) {
                 j1.ajouterUneCarte(paquet.get(index));
             } else {
                 j2.ajouterUneCarte(paquet.get(index));
